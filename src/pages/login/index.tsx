@@ -1,10 +1,9 @@
 import { API } from '@/configs/axios';
-import { TOKEN_LOCAL_STORAGE_KEY } from '@/constants/FeatureKeyContant';
+import { TOKEN_LOCAL_STORAGE_KEY } from '@/constants/FeatureKeyConstant';
 import { IGlobalStateType } from '@/constants/StateManagement';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Head from 'next/head';
 import Link from 'next/link';
-import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
