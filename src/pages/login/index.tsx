@@ -1,4 +1,3 @@
-import { API } from '@/configs/axios';
 import { TOKEN_LOCAL_STORAGE_KEY } from '@/constants/FeatureKeyConstant';
 import { IGlobalStateType } from '@/constants/StateManagement';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -7,7 +6,6 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
-    const data = API.get('api/hello');
     const tokens = useSelector((state: IGlobalStateType) => state.tokens);
     console.log('Login page token', tokens.data);
 

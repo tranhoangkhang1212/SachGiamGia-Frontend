@@ -1,0 +1,33 @@
+.sub_menu {
+    width: 882px;
+}
+
+@media only screen and (max-width: 1240px) {
+    .sub_menu {
+        width: 69vw;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .sub_menu {
+        width: 66vw;
+    }
+}
+
+@media only screen and (max-width: 948px) {
+    .sub_menu {
+        width: 65vw;
+    }
+}
+
+@media only screen and (max-width: 890px) {
+    .sub_menu {
+        width: 62vw;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+    .sub_menu {
+        width: 59vw;
+    }
+}

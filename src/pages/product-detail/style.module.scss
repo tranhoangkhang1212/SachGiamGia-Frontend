@@ -1,0 +1,17 @@
+.content-wrapper {
+    figure {
+        max-width: 100%;
+        img {
+            max-width: 100%;
+        }
+        margin: 0 !important;
+    }
+}
+
+.bg-article {
+    background: linear-gradient(to bottom,rgba(255 255 255/0),rgba(255 255 255/62.5),rgba(255 255 255/1));
+    height: 105px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

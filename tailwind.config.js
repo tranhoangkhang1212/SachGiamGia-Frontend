@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 // eslint-disable max-classes-per-file
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const plugin = require('tailwindcss/plugin');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const colors = require('tailwindcss/colors');
 
 module.exports = {
     content: [
@@ -11,16 +14,18 @@ module.exports = {
     ],
     theme: {
         extend: {
-            backgroundImage: {
-                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-            },
             maxWidth: {
+                primary: '1150px',
+            },
+            width: {
                 primary: '1150px',
             },
             boxShadow: {
                 default: '0px 3px 25px 0px rgba(31,38,67,0.1)',
+            },
+            screens: {
+                xs: '480px',
+                xss: '380px',
             },
         },
         colors: {
@@ -30,8 +35,13 @@ module.exports = {
             dark: '#343a40',
             gray: '#dcdcdc',
             white: '#fff',
+            red: '#e31934',
+            orange: '#ed763c',
             'gray-dark': '#41454fe6',
-            'white-gray': '#9a9ca2',
+            'white-gray': '#f5f5f5',
+            blue: '#2f80ed',
+            transparent: '#fff0',
+            ...colors,
         },
     },
     plugins: [

@@ -3,8 +3,6 @@ import toast from 'react-hot-toast';
 const useLocalStorage = () => {
     const addValue = (key: string, value?: string) => {
         if (!value) {
-            console.log('Error');
-
             toast.error(`LocalStorage value must not be null ${key}`);
             return;
         }

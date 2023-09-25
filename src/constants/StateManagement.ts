@@ -1,27 +1,35 @@
-export enum ETokenStateActionType {
-    UPDATE_TOKEN,
-    REMOVE_TOKEN,
+import { ProductFilter } from './ProductFilter';
+
+export interface FilterDataChildren {
+    id: string;
+    name: string;
+}
+export interface FilterData {
+    title: string;
+    type: ProductFilter;
+    values: FilterDataChildren[];
 }
 
-export enum ETokenType {
-    CLIENT,
-    ADMIN,
+export interface DataFilterRequest {
+    type: ProductFilter;
+    values: string[];
 }
 
-export interface ITokenType {
-    data: Map<ETokenType, String>;
+export interface DataFilterRequestHandler {
+    type: ProductFilter;
+    id: string;
 }
 
-interface IPayloadType {
-    tokenType: ETokenType;
-    token: string;
+export interface ProductFilterAction {
+    type: ProductFilter;
+    id: string;
 }
 
-export interface IAction {
-    type: ETokenStateActionType;
-    payload: IPayloadType;
+export interface IDataFilterType {
+    data: DataFilterRequest[];
 }
 
-export interface IGlobalStateType {
-    tokens: ITokenType;
+export enum EFilterActionType {
+    AddData,
+    RemoveData,
 }

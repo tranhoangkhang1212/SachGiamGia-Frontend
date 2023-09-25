@@ -1,0 +1,131 @@
+.wrapper:before {
+    content: " ";
+    position: absolute;
+    bottom: -12px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 12px 0;
+    border-color: transparent #65b597 transparent transparent;
+}
+
+.wrapper:after {
+    content: " ";
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: transparent transparent transparent #65b597;
+}
+
+.sale-off {
+    position: absolute;
+    top: 8px;
+    left: 0;
+     > h3 {
+        border-top-left-radius: 7px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+     }
+}
+
+.sale-off:before {
+    content: " ";
+    position: absolute;
+    top: 25px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 12px 0;
+    border-color: transparent #e31934 transparent transparent;
+}
+
+.box-shadow {
+    box-shadow: 0px 3px 25px 12px rgba(31,38,67,0.1);
+}
+
+@media only screen and (min-width: 860px) and (max-width: 904px) {
+    .product {
+        max-width: 235px;
+    }
+}
+
+@media only screen and (min-width: 780px) and (max-width: 858px) {
+    .product {
+        max-width: 220px;
+    }
+    .content-wrapper {
+        height: 40vh !important;
+    }
+}
+
+
+@media only screen and (min-width: 680px) and (max-width: 733px) {
+    .product {
+        max-width: 200px;
+    }
+    
+}
+
+@media only screen and (min-width: 640px) and (max-width: 679px) {
+    .product {
+        max-width: 180px;
+    }
+}
+
+
+@media only screen and (min-width: 621px) and (max-width: 639px) {
+    .product {
+        max-width: 175px;
+    }
+}
+
+@media only screen and (min-width: 595px) and (max-width: 620px) {
+    .product {
+        max-width: 170px;
+    }
+}
+
+@media only screen and (min-width: 554px) and (max-width: 594px) {
+    .product {
+        max-width: 160px;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 535px) {
+    .product {
+        max-width: 135px;
+    }
+}
+
+@media only screen and (min-width: 440px) and (max-width: 479px) {
+    .product {
+        max-width: 180px;
+    }
+}
+
+@media only screen and (min-width: 421px) and (max-width: 439px) {
+    .product {
+        max-width: 170px;
+    }
+}
+
+@media only screen and (min-width: 403px) and (max-width: 420px) {
+    .product {
+        max-width: 162px;
+    }
+}
+
+@media only screen and (max-width: 402px) {
+    .product {
+        max-width: 38vw;
+    }
+        .content-wrapper {
+        height: 40vh !important;
+    }
+}

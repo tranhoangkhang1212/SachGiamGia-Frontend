@@ -1,8 +1,8 @@
-import tokenReducer from './token/tokenReducer';
+import dataFilterReducer from './data-filter/dataFilterSlice';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-    tokens: tokenReducer,
+    dataFilter: dataFilterReducer,
 });
 
 export default rootReducer;

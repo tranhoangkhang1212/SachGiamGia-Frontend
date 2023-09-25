@@ -1,48 +1,38 @@
 import Image from 'next/image';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Silder1 from '~/assets/images/silder_1.webp';
+import React from 'react';
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { banner_1 } from '~/assets/images';
 
-const CarouselBanner = () => {
-    const items = [
-        { id: 1, title: 'item #1' },
-        { id: 2, title: 'item #2' },
-        { id: 3, title: 'item #3' },
-        { id: 4, title: 'item #4' },
-        { id: 5, title: 'item #5' },
-    ];
+interface IProps {
+    className?: string;
+}
+
+const images = [{ image: banner_1 }, { image: banner_1 }, { image: banner_1 }];
+
+const CarouselBanner: React.FC<IProps> = (props) => {
+    const { className } = props;
     return (
-        <div>
-            {/* <Carousel
-                autoPlay
-                renderIndicator={(onClickHandler, isSelected, index, label) => {
-                    const defStyle = {
-                        marginLeft: 20,
-                        color: 'white',
-                        cursor: 'pointer',
-                    };
-                    return (
-                        <div
-                            className={clsx('bg-[#ffccdd] w-[15px]', {
-                                'bg-[#e64e1f]': isSelected,
-                            })}
-                        >
-                            h
-                        </div>
-                    );
-                }}
-                infiniteLoop
-            >
-                {items.map((item) => (
-                    <div
-                        className="w-[500px] h-[200px] bg-secondary"
-                        key={item.id}
-                    >
-                        {item.title}
-                    </div>
-                ))}
-            </Carousel>{' '} */}
-            <Image src={Silder1} alt={''} className="w-full"></Image>
-        </div>
+        <Swiper
+            className={className}
+            modules={[FreeMode, Navigation, Pagination, Autoplay]}
+            spaceBetween={20}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+            }}
+            pagination={{
+                clickable: true,
+            }}
+            navigation
+            loop
+        >
+            {images.map((item, index) => (
+                <SwiperSlide key={index}>
+                    <Image src={item.image} alt="" />
+                </SwiperSlide>
+            ))}
+        </Swiper>
     );
 };
 

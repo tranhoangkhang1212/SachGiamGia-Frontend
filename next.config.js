@@ -1,13 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     async rewrites() {
         return [
             {
-                source: '/san-pham/:slug',
+                source: '/danh-muc/:slug',
                 destination: '/products?slug=:slug',
             },
+            {
+                source: '/san-pham/:slug',
+                destination: '/product-detail?slug=:slug',
+            },
         ];
+    },
+    images: {
+        domains: ['localhost'],
     },
 };
 
