@@ -13,5 +13,17 @@
     height: 105px;
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 100% !important;
+}
+
+.content-detail {
+    figure {
+        max-width: 100%;
+        display: flex !important;
+        justify-content: center;
+        img {
+            max-width: 90% !important;
+        }
+        margin: 0 !important;
+    }
 }

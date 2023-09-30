@@ -1,7 +1,8 @@
-import { DataFilterRequest, ProductFilterAction } from '@/constants/StateManagement';
+import { DataFilterRequest, EProductFilterAction } from '@/constants/StateManagement';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { removeElementFromArray } from '@/utils/CommonUtil';
+import { EProductSort } from '@/constants/ProductEnum';
 
 interface DataFilterSlice {
     data: DataFilterRequest[];
@@ -10,14 +11,14 @@ interface DataFilterSlice {
 
 const initState: DataFilterSlice = {
     data: [],
-    sort: 'noneSort',
+    sort: EProductSort.NoneSort,
 };
 
 const dataFilterSlice = createSlice({
     name: 'dataFilter',
     initialState: initState,
     reducers: {
-        updateState(state, action: PayloadAction<ProductFilterAction>) {
+        updateState(state, action: PayloadAction<EProductFilterAction>) {
             const { data } = state;
             const filterData = data.find((e) => e.type === action.payload.type);
             if (filterData) {
@@ -35,7 +36,7 @@ const dataFilterSlice = createSlice({
 const updateCurrentData = (
     data: DataFilterRequest[],
     filterData: DataFilterRequest,
-    action: PayloadAction<ProductFilterAction>,
+    action: PayloadAction<EProductFilterAction>,
 ) => {
     if (filterData.values.includes(action.payload.id)) {
         if (filterData.values.length === 1) {
@@ -48,7 +49,7 @@ const updateCurrentData = (
     }
 };
 
-const addNewData = (data: DataFilterRequest[], action: PayloadAction<ProductFilterAction>) => {
+const addNewData = (data: DataFilterRequest[], action: PayloadAction<EProductFilterAction>) => {
     const newData: DataFilterRequest = {
         type: action.payload.type,
         values: [action.payload.id],

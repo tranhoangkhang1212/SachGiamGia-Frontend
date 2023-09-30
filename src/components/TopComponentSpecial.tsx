@@ -9,7 +9,6 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useToggle } from 'react-use';
-import LoadingOverlay from './LoadingOverlay';
 import { IMenuContentData } from './SideBar/MenuContent';
 
 const DesktopSideBar = dynamic(() => import('./SideBar/DesktopSideBar'), {
@@ -50,7 +49,7 @@ const TopComponentSpecial = () => {
     }, []);
 
     if (isLoading) {
-        return <></>
+        return <></>;
     }
 
     return (
@@ -63,6 +62,7 @@ const TopComponentSpecial = () => {
                             '!block': isShowDesktopSideBar && breakPoint > EDeviceDetect.md,
                         })}
                         data={sidebarData}
+                        onClick={toggleShowDesktopSideBar}
                     />
                 )}
                 {breakPoint <= EDeviceDetect.md && <MobileSideBar isShow={isShowSideBar} onClose={handleShowSidebar} />}

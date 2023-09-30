@@ -22,6 +22,7 @@ module.exports = {
             },
             boxShadow: {
                 default: '0px 3px 25px 0px rgba(31,38,67,0.1)',
+                'custom-1': '0px 3px 7px 0px rgb(57 57 57 / 48%)',
             },
             screens: {
                 xs: '480px',

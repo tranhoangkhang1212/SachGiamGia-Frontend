@@ -17,7 +17,7 @@ const Overlay: React.FC<IOverlayProps> = (props) => {
 
     return (
         <Transition.Root show={isShow} as={Fragment}>
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={toggle}>
+            <Dialog as="div" className="relative z-[999]" initialFocus={cancelButtonRef} onClose={toggle}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

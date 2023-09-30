@@ -1,9 +1,10 @@
-import { FilterData } from "@/constants/StateManagement";
-import { IProductData } from "../Product";
+import { FilterData } from '@/constants/StateManagement';
+import { IProductData } from '../Product';
+import { PaginationResponse } from './PaginationResponse';
 
 export interface SidebarDetailResponseDto {
-    products: IProductData[];
-    filters: FilterData[]
+    product: PaginationResponse<IProductData>;
+    filters: FilterData[];
 }
 
 export interface ProductInfo {

@@ -1,12 +1,13 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { logo } from '~/assets/images';
 import { Cart, Search, User } from './Icons';
 import toast from 'react-hot-toast';
 import ComingSoon from './ComingSoon';
-import { useToggle } from 'react-use';
+import { useDebounce, useToggle } from 'react-use';
+import SearchResult from './SearchResult';
 
 interface IProps {
     className?: string;
@@ -15,6 +16,11 @@ interface IProps {
 
 const Header = () => {
     const [isShowComingSoon, toggleComingSoon] = useToggle(false);
+    const firstFetchData = useRef(false);
+    if (!firstFetchData.current) {
+        firstFetchData.current = true;
+        console.log('Get Header');
+    }
 
     return (
         <div className="px-4 bg-primary md:px-8 xl:px-0">
@@ -55,14 +61,34 @@ const LogoComponent: React.FC<IProps> = ({ className }) => {
 };
 
 const SearchForm: React.FC<IProps> = ({ className }) => {
+    const [input, setInput] = useState<string>('');
+    const [debouncedValue, setDebouncedValue] = useState('');
+
+    const [,] = useDebounce(
+        () => {
+            setDebouncedValue(input);
+        },
+        500,
+        [input],
+    );
+
+    const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    };
+
     return (
-        <div className={clsx('flex-center mx-0 md:mx-4', className)}>
+        <div className={clsx('flex-center mx-0 md:mx-4 relative', className)}>
             <div className="w-full md:w-[90%] mt-4 md:mt-0 h-[40px] flex items-center bg-[#fff] rounded-[5px]">
-                <input type="text" className="w-full h-full text-[#000] outline-none p-2 rounded-[5px]" />
+                <input
+                    type="text"
+                    className="w-full h-full text-[#000] outline-none p-2 rounded-[5px]"
+                    onChange={handleKeywordChange}
+                />
                 <button className="w-[35px]">
                     <Search height="22px" />
                 </button>
             </div>
+            <SearchResult keyword={debouncedValue} />
         </div>
     );
 };

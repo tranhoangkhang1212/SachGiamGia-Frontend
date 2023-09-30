@@ -1,5 +1,5 @@
 import Checkbox from '@/components/Checkbox';
-import { ProductFilter } from '@/constants/ProductFilter';
+import { EProductFilter, EProductSort } from '@/constants/ProductEnum';
 import { DataFilterRequestHandler, FilterData } from '@/constants/StateManagement';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -18,7 +18,7 @@ interface ISidebarProps extends IBaseAppProps {
 }
 
 const SearchBar: React.FC<ISidebarProps> = (props) => {
-    const { className, data } = props;
+    const { data } = props;
     const [isShow, toggleShow] = useToggle(false);
 
     const { data: filterData } = useAppSelector(selectFilterData);
@@ -28,7 +28,7 @@ const SearchBar: React.FC<ISidebarProps> = (props) => {
         dispatch(updateState({ id: data.id, type: data.type }));
     };
 
-    const checkChecked = (type: ProductFilter, id: string) => {
+    const checkChecked = (type: EProductFilter, id: string) => {
         const filterDataByType = filterData.find((e) => e.type === type);
         if (!filterDataByType) {
             return false;
@@ -81,7 +81,9 @@ const SearchBar: React.FC<ISidebarProps> = (props) => {
                                 <Checkbox
                                     key={element.id}
                                     title={
-                                        value.type === ProductFilter.Price ? getTitleFormat(element.name) : element.name
+                                        value.type === EProductFilter.Price
+                                            ? getTitleFormat(element.name)
+                                            : element.name
                                     }
                                     checked={checkChecked(value.type, element.id)}
                                     onClick={() => {
@@ -105,13 +107,13 @@ const SearchBar: React.FC<ISidebarProps> = (props) => {
                     <option className="h-[120px] leading-5" value="" selected disabled>
                         Sắp xếp
                     </option>
-                    <option className="h-[120px] leading-5" value="totalView">
+                    <option className="h-[120px] leading-5" value={EProductSort.TotalViewDesc}>
                         Lượt xem
                     </option>
-                    <option className="h-[120px] leading-5" value="priceDesc">
+                    <option className="h-[120px] leading-5" value={EProductSort.PriceDesc}>
                         Giá cao đến thấp
                     </option>
-                    <option className="h-[120px] leading-5" value="priceAsc">
+                    <option className="h-[120px] leading-5" value={EProductSort.PriceAsc}>
                         Giá thấp đến cao
                     </option>
                 </select>

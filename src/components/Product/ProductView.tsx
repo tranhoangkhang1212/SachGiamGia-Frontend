@@ -1,22 +1,23 @@
 import Image from '@/components/Image';
 import { IProductData } from '@/interfaces/Product';
-import { priceFormat } from '@/utils/CommonUtil';
+import { getImageUrl, priceFormat } from '@/utils/CommonUtil';
 import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 import { book1 } from '~/assets/images';
 import styles from './style.module.scss';
+import SaleOff from './SaleOff';
 
 interface IProductViewProps extends IProductData {
     className?: string;
 }
 
 const ProductView: React.FC<IProductViewProps> = (props) => {
-    const { className, slug, name, image, author, saleOff, price, finalPrice } = props;
+    const { className, slug, name, images, author, saleOff, price, finalPrice } = props;
     return (
         <div
             className={clsx(
-                'text-black max-w-[145px] xs:max-w-[150px] sm:max-w-[165px] md:max-w-[200px] lg:max-w-[220px] xl:max-w-[260px] p-2 xs:p-4 rounded-md relative',
+                'text-black max-w-full min-h-[280px] xs:min-h-[420px] p-2 xs:p-4 rounded-md relative',
                 className,
                 styles.product,
             )}
@@ -27,23 +28,15 @@ const ProductView: React.FC<IProductViewProps> = (props) => {
                         pathname: '/product-detail',
                         query: { slug: slug },
                     }}
-                    as={`/san-pham/${slug}`}
+                    as={`/chi-tiet/${slug}`}
                 >
                     <div className="w-full flex-center">
-                        {saleOff && saleOff > 0 ? (
-                            <div className={clsx('inline-block absolute mt-[-20px] ml-[-8px]', styles['sale-off'])}>
-                                <h3 className="bg-red-600 text-white h-[25px] leading-[25px] px-2 text-[14px] font-bold">
-                                    Giảm {saleOff}%
-                                </h3>
-                            </div>
-                        ) : (
-                            <></>
-                        )}
-                        <div className="h-[150px] xs:h-full xs:w-full rounded-md overflow-hidden">
+                        <SaleOff className="absolute left-0 top-[8px]" saleOff={saleOff} />
+                        <div className="overflow-hidden border-[1px] !h-[220px]">
                             <Image
-                                className="max-w-full duration-300 ease-linear hover:scale-110"
-                                src="http://localhost:9000/sach-giam-gia/screencapture-localhost-3000-san-pham-one-piece-1-2023-09-23-16_06_19.png"
-                                alt=""
+                                className="object-contain !h-[220px] duration-300 ease-linear hover:scale-110"
+                                src={getImageUrl(images)}
+                                alt={name}
                                 defaultUrl={book1}
                             />
                         </div>
@@ -53,8 +46,14 @@ const ProductView: React.FC<IProductViewProps> = (props) => {
                     </div>
                 </Link>
                 <p className="text-[12px] xs:text-[16px]">{author.name}</p>
-                <p className="text-[16px] xs:text-[20px] mt-2 font-semibold">{priceFormat(price)}</p>
-                <p className="text-[16px] xs:text-[20px] mt-2 font-semibold">{priceFormat(18000)}</p>
+                <p className="text-[16px] xs:text-[20px] mt-2 font-semibold">
+                    {priceFormat(saleOff && saleOff > 0 ? finalPrice : price)}
+                </p>
+                {saleOff && saleOff > 0 ? (
+                    <p className={clsx('text-[15px] line-through')}>{priceFormat(price)}</p>
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     );

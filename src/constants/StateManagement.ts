@@ -1,4 +1,4 @@
-import { ProductFilter } from './ProductFilter';
+import { EProductFilter } from './ProductEnum';
 
 export interface FilterDataChildren {
     id: string;
@@ -6,22 +6,22 @@ export interface FilterDataChildren {
 }
 export interface FilterData {
     title: string;
-    type: ProductFilter;
+    type: EProductFilter;
     values: FilterDataChildren[];
 }
 
 export interface DataFilterRequest {
-    type: ProductFilter;
+    type: EProductFilter;
     values: string[];
 }
 
 export interface DataFilterRequestHandler {
-    type: ProductFilter;
+    type: EProductFilter;
     id: string;
 }
 
-export interface ProductFilterAction {
-    type: ProductFilter;
+export interface EProductFilterAction {
+    type: EProductFilter;
     id: string;
 }
 

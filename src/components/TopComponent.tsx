@@ -1,17 +1,17 @@
+import { API } from '@/configs/axios';
 import { EDeviceDetect } from '@/constants/DeviceDetect';
 import { useDeviceDetect } from '@/hooks';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AxiosError } from 'axios';
 import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useToggle } from 'react-use';
+import { default_banner } from '~/assets/images';
 import CarouselBanner from './CarouselBanner';
 import { IMenuContentData } from './SideBar/MenuContent';
-import { AxiosError } from 'axios';
-import toast from 'react-hot-toast';
-import { API } from '@/configs/axios';
-import LoadingOverlay from './LoadingOverlay';
 
 const DesktopSideBar = dynamic(() => import('./SideBar/DesktopSideBar'), {
     ssr: false,
@@ -28,6 +28,7 @@ const TopComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [sidebarData, setSidebarData] = useState<IMenuContentData[]>([]);
+    const [banners, setBanners] = useState<string[]>([]);
 
     const handleShowSidebar = () => {
         if (breakPoint > EDeviceDetect.lg) {
@@ -41,7 +42,9 @@ const TopComponent = () => {
         try {
             setIsLoading(true);
             const { data } = await API.get('/sidebar');
+            const { data: banners } = await API.get('/layout/banners/show');
             setSidebarData(data);
+            setBanners(banners);
         } catch (error) {
             toast.error((error as AxiosError).message);
         } finally {
@@ -57,6 +60,14 @@ const TopComponent = () => {
         return <></>;
     }
 
+    const getBanners = () => {
+        if (banners.length <= 0) {
+            const defaultUrl = default_banner as unknown as string;
+            return [defaultUrl, defaultUrl, defaultUrl];
+        }
+        return banners;
+    };
+
     return (
         <>
             <ContactHeader className="cursor-pointer" onClick={handleShowSidebar} />
@@ -70,7 +81,7 @@ const TopComponent = () => {
                 {breakPoint <= EDeviceDetect.md && (
                     <MobileSideBar isShow={iShowMobileSideBar} onClose={handleShowSidebar} />
                 )}
-                <CarouselBanner className={clsx('basis-[77%] z-0')} />
+                <CarouselBanner className={clsx('basis-[77%] z-0')} images={getBanners()} />
             </div>
         </>
     );

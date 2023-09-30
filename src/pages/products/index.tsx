@@ -1,112 +1,92 @@
+import LoadingOverlay from '@/components/LoadingOverlay';
+import Pagination from '@/components/Pagination';
+import ProductListView from '@/components/Product/ProductListView';
 import { API } from '@/configs/axios';
+import { FilterData } from '@/constants/StateManagement';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { IProductData } from '@/interfaces/Product';
 import { ContextWithParams } from '@/interfaces/QueryParams';
 import { IPropsResult } from '@/interfaces/ServerSideProps';
-import { useState } from 'react';
-import { useAsync, useToggle } from 'react-use';
-import SearchBar from './SearchBar';
-import ListProduct from '@/components/Product/ListProduct';
-import { BookData } from '@/constants/MockData';
-import ProductListView from '@/components/Product/ProductListView';
-import clsx from 'clsx';
-import Pagination from '@/components/Pagination';
-import { ProductFilter } from '@/constants/ProductFilter';
-import { DataFilterRequest } from '@/constants/StateManagement';
-import { useDispatch, useSelector } from 'react-redux';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { PaginationResponse } from '@/interfaces/response/PaginationResponse';
 import { selectFilterData } from '@/redux/data-filter/dataFilterSlice';
-import Modal from '@/components/Modal';
-import Overlay from '@/components/Overlay';
-import { SidebarDetailResponseDto } from '@/interfaces/response/SidebarProductResponse';
-import LoadingOverlay from '@/components/LoadingOverlay';
-// import { ParsedUrlQuery } from 'querystring';
-
-// interface IQuery extends ParsedUrlQuery {
-//     slug: string;
-//     subSlug?: string;
-// }
+import { executePostWithBody } from '@/utils/APIUtil';
+import { useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useAsync } from 'react-use';
+import SearchBar from './SearchBar';
 
 interface IProps {
     data: IServerSideData;
 }
 
-interface IServerSideData extends SidebarDetailResponseDto {
+interface IServerSideData {
     slug: string;
 }
 
-const mockData = [
-    {
-        title: 'Thể loại',
-        type: ProductFilter.Category,
-        values: [
-            { id: 'id-1', name: 'Truyện tranh 1' },
-            { id: 'id-2', name: 'Truyện tranh 2' },
-            { id: 'id-3', name: 'Truyện tranh 3' },
-            { id: 'id-4', name: 'Truyện tranh 4' },
-        ],
-    },
-    {
-        title: 'Tác giả',
-        type: ProductFilter.Author,
-        values: [
-            { id: 'id-1', name: 'Trần Khang 01' },
-            { id: 'id-2', name: 'Trần Khang 02' },
-            { id: 'id-3', name: 'Trần Khang 03' },
-            { id: 'id-4', name: 'Trần Khang 04' },
-        ],
-    },
-    {
-        title: 'Nhà phát hành',
-        type: ProductFilter.Publisher,
-        values: [
-            { id: 'id-1', name: 'Nhà phát hành 01' },
-            { id: 'id-2', name: 'Nhà phát hành 02' },
-            { id: 'id-3', name: 'Nhà phát hành 03' },
-            { id: 'id-4', name: 'Nhà phát hành 04' },
-            { id: 'id-5', name: 'Nhà phát hành 04' },
-            { id: 'id-6', name: 'Nhà phát hành 04' },
-            { id: 'id-7', name: 'Nhà phát hành 04' },
-            { id: 'id-8', name: 'Nhà phát hành 04' },
-            { id: 'id-9', name: 'Nhà phát hành 04' },
-            { id: 'id-10', name: 'Nhà phát hành 04' },
-            { id: 'id-11', name: 'Nhà phát hành 04' },
-            { id: 'id-12', name: 'Nhà phát hành 04' },
-        ],
-    },
-    {
-        title: 'Giá tiền',
-        type: ProductFilter.Price,
-        values: [
-            { id: 'id-1', name: '10.000 - 20.000' },
-            { id: 'id-2', name: '20.000 - 30.000' },
-            { id: 'id-3', name: '30.000 - 40.000' },
-            { id: 'id-4', name: '40.000 - 50.000' },
-        ],
-    },
-];
-
+const PAGE_SIZE = 15;
 const Products = (props: IProps) => {
-    const { loading, value } = useAsync(async () => await API.get('/product/side-bar', { params: request }));
-    const [request, setRequest] = useState({ slug: props.data.slug });
+    const firstLoadingRef = useRef(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [pageIndex, setPageIndex] = useState(1);
+    const [totalElement, setTotalElement] = useState(0);
+    const [products, setProducts] = useState<IProductData[]>([]);
+    const [filterData, setFilterData] = useState<FilterData[]>([]);
+    const { data: filters, sort } = useAppSelector(selectFilterData);
 
-    const { data, sort } = useAppSelector(selectFilterData);
-    console.log({ data, sort });
+    useAsync(async () => {
+        try {
+            if (!firstLoadingRef.current) {
+                setIsLoading(true);
+            }
+            const { data }: { data: PaginationResponse<IProductData> } = await executePostWithBody(
+                '/product/side-bar',
+                { pageSize: PAGE_SIZE, page: pageIndex, slug: props.data.slug, filters, sort },
+            );
+            setProducts(data.rows);
+            setTotalElement(data.count);
+        } catch (error) {
+            toast.error((error as Error).message);
+        } finally {
+            firstLoadingRef.current = true;
+            setIsLoading(false);
+        }
+    }, [pageIndex, filters, sort, props.data.slug]);
 
-    if (loading || !value) {
+    useAsync(async () => {
+        try {
+            if (!firstLoadingRef.current) {
+                setIsLoading(true);
+            }
+            const { data }: { data: FilterData[] } = await API.get('/sidebar/filter');
+            setFilterData(data);
+        } catch (error) {
+            toast.error((error as Error).message);
+        } finally {
+            firstLoadingRef.current = true;
+            setIsLoading(false);
+        }
+    }, []);
+
+    if (isLoading) {
         return <LoadingOverlay />;
     }
 
-    const { products, filters } = value.data as SidebarDetailResponseDto;
-    console.log(products);
+    const handlePaginationChange = (pageIndex: number) => {
+        setPageIndex(pageIndex);
+    };
 
     return (
         <div className="mt-4 text-black">
-            <SearchBar className="basis-[25%]" data={filters} />
+            <SearchBar className="basis-[25%]" data={filterData} />
             <div className="basis-[75%]">
-                {[...Array(3)].map((_, index) => (
-                    <ProductListView key={index} products={products} className="!px-0" />
-                ))}
+                <ProductListView products={products} className="!px-0" />
             </div>
-            <Pagination className="mt-4" pageSize={5} totalElement={50} />
+            <Pagination
+                className="mt-4"
+                pageSize={PAGE_SIZE}
+                totalElement={totalElement}
+                onPaginationChange={handlePaginationChange}
+            />
         </div>
     );
 };
@@ -116,7 +96,9 @@ export const getServerSideProps = async (context: ContextWithParams): Promise<IP
     const slug = query.slug;
     return {
         props: {
-            data: { slug },
+            data: {
+                slug,
+            },
         },
     };
 };

@@ -6,3 +6,4 @@ export * as slide2 from './silder_2.png';
 export * as slide3 from './silder_3.png';
 export * as banner_1 from './banner_01.png';
 export * as coming_soon from './coming.png';
+export * as default_banner from './default_banner.webp';

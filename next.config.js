@@ -8,7 +8,7 @@ const nextConfig = {
                 destination: '/products?slug=:slug',
             },
             {
-                source: '/san-pham/:slug',
+                source: '/chi-tiet/:slug',
                 destination: '/product-detail?slug=:slug',
             },
         ];

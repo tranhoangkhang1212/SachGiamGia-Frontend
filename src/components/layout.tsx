@@ -1,7 +1,6 @@
 import TopComponent from '@/components/TopComponent';
 import TopComponentSpecial from '@/components/TopComponentSpecial';
 import { RouteNotLayout, RouteTopComponentSpecial } from '@/constants/Routes';
-import { IBaseAppProps } from '@/interfaces/props';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { useRouter } from 'next/router';
@@ -10,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer';
 import Header from './Header';
 import dynamic from 'next/dynamic';
+import { IBaseAppProps } from '@/interfaces/Props';
 
 config.autoAddCss = false;
 const Toaster = dynamic(() => import('react-hot-toast').then((c) => c.Toaster), {

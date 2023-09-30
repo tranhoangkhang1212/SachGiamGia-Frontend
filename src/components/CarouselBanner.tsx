@@ -1,17 +1,15 @@
-import Image from 'next/image';
 import React from 'react';
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { banner_1 } from '~/assets/images';
+import Image from './Image';
 
-interface IProps {
+interface ICarouselBannerProps {
     className?: string;
+    images: string[];
 }
 
-const images = [{ image: banner_1 }, { image: banner_1 }, { image: banner_1 }];
-
-const CarouselBanner: React.FC<IProps> = (props) => {
-    const { className } = props;
+const CarouselBanner: React.FC<ICarouselBannerProps> = (props) => {
+    const { className, images } = props;
     return (
         <Swiper
             className={className}
@@ -29,7 +27,7 @@ const CarouselBanner: React.FC<IProps> = (props) => {
         >
             {images.map((item, index) => (
                 <SwiperSlide key={index}>
-                    <Image src={item.image} alt="" />
+                    <Image src={item} alt={`Banner ${index}`} />
                 </SwiperSlide>
             ))}
         </Swiper>

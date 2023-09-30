@@ -89,8 +89,10 @@ body {
 }
 
 .swiper-slide-thumb-active {
-  border: 1px solid var(--primary-color);
-  border-radius: 6px;
+  img {
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+  }
 }
 
 .swiper-pagination-bullet-active {

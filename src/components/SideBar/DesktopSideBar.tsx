@@ -8,12 +8,13 @@ import SubMenuContent from './SubMenuContent';
 interface IProps {
     className?: string;
     data: IMenuContentData[];
+    onClick?: () => void;
 }
 
 const LIMIT_SIZE_SIDE_BAR = 10;
 
 const DesktopSideBar: React.FC<IProps> = (props) => {
-    const { className, data = [] } = props;
+    const { className, data = [], onClick } = props;
 
     const defaultData = data.slice(0, LIMIT_SIZE_SIDE_BAR - 1);
     const renderData = data.length > LIMIT_SIZE_SIDE_BAR ? defaultData : data;
@@ -40,6 +41,7 @@ const DesktopSideBar: React.FC<IProps> = (props) => {
                     'rounded-md border-gray min-h-[380px] hidden lg:block ' +
                     className,
             )}
+            onClick={onClick}
         >
             {dataRendering.map((menu, index) => (
                 <MenuContent

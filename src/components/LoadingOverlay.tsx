@@ -1,7 +1,6 @@
 import React from 'react';
 import Overlay from './Overlay';
 
-
 const LoadingOverlay = () => {
     return (
         <Overlay isShow={true} toggle={() => {}}>
