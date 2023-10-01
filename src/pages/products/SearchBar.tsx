@@ -18,7 +18,7 @@ interface ISidebarProps extends IBaseAppProps {
 }
 
 const SearchBar: React.FC<ISidebarProps> = (props) => {
-    const { data } = props;
+    const { data = [] } = props;
     const [isShow, toggleShow] = useToggle(false);
 
     const { data: filterData } = useAppSelector(selectFilterData);

@@ -19,7 +19,7 @@ const MobileSideBar: React.FC<IProps> = (props) => {
     const response = value as BaseDataResponse<IMenuContentData[]>;
 
     if (loading) {
-        return <LoadingOverlay isShow />;
+        return <LoadingOverlay />;
     }
 
     return (

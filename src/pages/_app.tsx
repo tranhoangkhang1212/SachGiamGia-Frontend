@@ -10,11 +10,14 @@ import { Provider } from 'react-redux';
 require('dotenv').config();
 
 const App = ({ Component, pageProps }: AppProps) => {
+    console.log('******************ENV******************', { ...process.env });
+
     return (
         <Provider store={store}>
             <Layout>
                 <Head>
                     <title>Sách giảm giá</title>
+                    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
                 </Head>
                 <Component {...pageProps} />
             </Layout>

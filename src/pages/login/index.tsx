@@ -1,14 +1,9 @@
 import { TOKEN_LOCAL_STORAGE_KEY } from '@/constants/FeatureKeyConstant';
-import { IGlobalStateType } from '@/constants/StateManagement';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
 
 const Login = () => {
-    const tokens = useSelector((state: IGlobalStateType) => state.tokens);
-    console.log('Login page token', tokens.data);
-
     const { addValue } = useLocalStorage();
     const handleAddToken = () => {
         addValue(TOKEN_LOCAL_STORAGE_KEY, '');
