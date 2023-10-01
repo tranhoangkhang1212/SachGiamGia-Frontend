@@ -3,7 +3,7 @@ import { EProductFilter, EProductSort } from '@/constants/ProductEnum';
 import { DataFilterRequestHandler, FilterData } from '@/constants/StateManagement';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { IBaseAppProps } from '@/interfaces/Props';
+import { IBaseAppProps } from '@/interfaces/CommonProps';
 import { selectFilterData, updateSort, updateState } from '@/redux/data-filter/dataFilterSlice';
 import { priceFormat } from '@/utils/CommonUtil';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';

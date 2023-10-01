@@ -10,8 +10,6 @@ import { Provider } from 'react-redux';
 require('dotenv').config();
 
 const App = ({ Component, pageProps }: AppProps) => {
-    console.log('******************ENV******************', { ...process.env });
-
     return (
         <Provider store={store}>
             <Layout>

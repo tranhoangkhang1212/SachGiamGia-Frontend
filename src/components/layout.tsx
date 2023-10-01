@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer';
 import Header from './Header';
 import dynamic from 'next/dynamic';
-import { IBaseAppProps } from '@/interfaces/Props';
+import { IBaseAppProps } from '@/interfaces/CommonProps';
 
 config.autoAddCss = false;
 const Toaster = dynamic(() => import('react-hot-toast').then((c) => c.Toaster), {

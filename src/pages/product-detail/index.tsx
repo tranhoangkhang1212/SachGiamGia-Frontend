@@ -3,7 +3,7 @@ import Overlay from '@/components/Overlay';
 import ListProduct from '@/components/Product/ListProduct';
 import { API } from '@/configs/axios';
 import { IProductData, IProductDetail } from '@/interfaces/Product';
-import { IBaseAppProps } from '@/interfaces/Props';
+import { IBaseAppProps } from '@/interfaces/CommonProps';
 import { ContextWithParams } from '@/interfaces/QueryParams';
 import { IPropsResult } from '@/interfaces/ServerSideProps';
 import { priceFormat } from '@/utils/CommonUtil';

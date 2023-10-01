@@ -1,5 +1,5 @@
 import { IProductData } from '@/interfaces/Product';
-import { IBaseAppProps } from '@/interfaces/Props';
+import { IBaseAppProps } from '@/interfaces/CommonProps';
 import clsx from 'clsx';
 import ProductListView from './ProductListView';
 import styles from './style.module.scss';
