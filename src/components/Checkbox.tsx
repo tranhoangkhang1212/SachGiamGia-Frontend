@@ -1,10 +1,10 @@
-import { IBaseAppProps } from '@/interfaces/Props';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React from 'react';
 
-interface ICheckboxProps extends IBaseAppProps {
+interface ICheckboxProps {
+    className?: string;
     title: string;
     checked: boolean;
     onClick: () => void;
