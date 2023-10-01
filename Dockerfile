@@ -6,7 +6,6 @@ COPY package.json .
 COPY yarn.lock .
 COPY tsconfig.json .
 COPY next.config.js .
-COPY next-env.d.ts .
 COPY src/ src/
 
 RUN yarn install
