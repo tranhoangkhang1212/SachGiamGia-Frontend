@@ -2,8 +2,7 @@ FROM node:18
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json yarn.lock* ./
 
 RUN yarn install
 
@@ -17,8 +16,8 @@ RUN echo "API_ENDPOINT: $NEXT_PUBLIC_API_ENDPOINT"
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
