@@ -36,7 +36,6 @@ API.interceptors.request.use(
         const token = 'Token';
         config.headers.Authorization = requireAuth ? `token||${token}` : process.env.NEXT_PUBLIC_HARD_TOKEN;
         config.headers = {
-            mode: 'no-cors',
             ...config.headers,
         } as unknown as AxiosHeaders;
 
