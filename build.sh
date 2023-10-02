@@ -22,8 +22,7 @@ else
 fi
 
 # Step 2: Run the Docker container
-docker run -d --name ${container_name} -p 8081:3000 sach_giam_gia_fe \
-  --restart always
+docker run -d --name ${container_name} -p 8081:3000 --restart always sach_giam_gia_fe
 
 # Check container start
 if [ $? -eq 0 ]; then
