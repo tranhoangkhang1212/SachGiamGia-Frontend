@@ -11,8 +11,7 @@ fi
 
 # Step 1: Build the Docker image
 docker build -t sach_giam_gia_fe \
-  --build-arg API_ENDPOINT=http://193.203.167.4:8080 \
-  . 
+  --build-arg API_ENDPOINT=https:/api.sachgiamgia.vn . 
 
 if [ $? -eq 0 ]; then
   echo "Docker image built successfully."
