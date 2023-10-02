@@ -11,7 +11,7 @@ fi
 
 # Step 1: Build the Docker image
 docker build -t sach_giam_gia_fe \
-  --build-arg API_ENDPOINT=https://api.sachgiamgia.vn \
+  --build-arg API_ENDPOINT=http://193.203.167.4:8080 \
   . 
 
 if [ $? -eq 0 ]; then
@@ -22,7 +22,8 @@ else
 fi
 
 # Step 2: Run the Docker container
-docker run -d --name ${container_name} -p 8081:3000 sach_giam_gia_fe
+docker run -d --name ${container_name} -p 8081:3000 sach_giam_gia_fe \
+  --restart always
 
 # Check container start
 if [ $? -eq 0 ]; then
