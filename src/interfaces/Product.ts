@@ -28,3 +28,22 @@ export interface ImageResponse {
     url: string;
     default: boolean;
 }
+
+const initAuthor = { id: '', name: '' };
+
+export const initProductDetail: IProductDetail = {
+    distributor: initAuthor,
+    totalView: 0,
+    totalBuy: 0,
+    star: 0,
+    statistics: '',
+    description: '',
+    id: '',
+    name: '',
+    images: [],
+    author: initAuthor,
+    publisher: initAuthor,
+    saleOff: 0,
+    price: 0,
+    finalPrice: 0,
+};

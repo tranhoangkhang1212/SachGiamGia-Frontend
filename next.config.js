@@ -6,11 +6,15 @@ const nextConfig = {
         return [
             {
                 source: '/danh-muc/:slug',
-                destination: '/products?slug=:slug',
+                destination: '/products/menu?slug=:slug',
             },
             {
                 source: '/chi-tiet/:slug',
                 destination: '/product-detail?slug=:slug',
+            },
+            {
+                source: '/tim-kiem/:slug',
+                destination: '/products/search?slug=:slug',
             },
         ];
     },

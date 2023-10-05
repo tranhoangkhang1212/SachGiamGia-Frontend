@@ -13,7 +13,8 @@ import { executePostWithBody } from '@/utils/APIUtil';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAsync } from 'react-use';
-import SearchBar from './SearchBar';
+import SearchBar from '../SearchBar';
+import EmptyProductResult from '@/components/EmptyProductResult';
 
 interface IProps {
     data: IServerSideData;
@@ -87,6 +88,11 @@ const Products = (props: IProps) => {
                 totalElement={totalElement}
                 onPaginationChange={handlePaginationChange}
             />
+            {products.length === 0 && (
+                <div className="mt-12">
+                    <EmptyProductResult />
+                </div>
+            )}
         </div>
     );
 };

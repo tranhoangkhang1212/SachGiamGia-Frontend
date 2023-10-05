@@ -89,7 +89,7 @@ const Content: React.FC<IMenuContentProps> = (props) => {
     return (
         <Link
             href={{
-                pathname: '/products',
+                pathname: '/products/menu',
                 query: { slug: slug },
             }}
             as={`/danh-muc/${slug}`}

@@ -2,7 +2,7 @@ import BaseButton from '@/components/Button/BaseButton';
 import Overlay from '@/components/Overlay';
 import ListProduct from '@/components/Product/ListProduct';
 import { API } from '@/configs/axios';
-import { IProductData, IProductDetail } from '@/interfaces/Product';
+import { IProductData, IProductDetail, initProductDetail } from '@/interfaces/Product';
 import { IBaseAppProps } from '@/interfaces/CommonProps';
 import { ContextWithParams } from '@/interfaces/QueryParams';
 import { IPropsResult } from '@/interfaces/ServerSideProps';
@@ -16,6 +16,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { useAsync, useToggle } from 'react-use';
 import styles from './style.module.scss';
+import LoadingOverlay from '@/components/LoadingOverlay';
 
 const ProductPreview = dynamic(() => import('@/components/Product/ProductPreview'), {
     ssr: false,
@@ -26,10 +27,10 @@ interface IDetailProps {
 }
 
 const ProductDetail: React.FC<IDetailProps> = ({ slug }) => {
-    const [productData, setProductData] = useState<IProductDetail>();
+    const [productData, setProductData] = useState<IProductDetail>(initProductDetail);
     const [sameAuthorData, setSameAuthorData] = useState<IProductData[]>([]);
 
-    useAsync(async () => {
+    const { loading } = useAsync(async () => {
         const { data } = await API.get(`/product/detail/${slug}`);
         setProductData(data);
     }, [slug]);
@@ -39,8 +40,8 @@ const ProductDetail: React.FC<IDetailProps> = ({ slug }) => {
         setSameAuthorData(data);
     }, [slug]);
 
-    if (!productData) {
-        return <></>;
+    if (loading) {
+        return <LoadingOverlay />;
     }
 
     return (
@@ -49,14 +50,9 @@ const ProductDetail: React.FC<IDetailProps> = ({ slug }) => {
                 <title>{productData.name}</title>
             </Head>
             <BookView book={productData} />
-            {productData.description ||
-                (productData.statistics.length > 0 && (
-                    <ProductIntroduce
-                        content={productData.description}
-                        data={productData.statistics}
-                        book={productData}
-                    />
-                ))}
+            {(productData.description.length > 0 || productData.statistics.length > 0) && (
+                <ProductIntroduce content={productData.description} data={productData.statistics} book={productData} />
+            )}
             <SameAuthor products={sameAuthorData} />
         </div>
     );
@@ -168,8 +164,8 @@ const ProductIntroduce: React.FC<IProductIntroduceProps> = (props) => {
                     />
                 )}
                 <ProductStatistic data={data} className={clsx({ '!basis-full': !content || content.length <= 0 })} />
+                <DetailPopup isShow={isShowDetailPopup} content={book.description} toggle={toggleShowPopupDetail} />
             </div>
-            <DetailPopup isShow={isShowDetailPopup} content={book.description} toggle={toggleShowPopupDetail} />
         </div>
     );
 };
@@ -184,12 +180,14 @@ const Introduction: React.FC<IIntroductionProps> = ({ toggle, content, className
     return (
         <div
             className={clsx(
-                'basis-1/2 lg:w-1/2 lg:mr-8 order-2 lg:order-1 max-h-[650px] w-full overflow-hidden relative',
+                'basis-1/2 lg:w-1/2 lg:mr-8 order-2 max-h-[650px] lg:order-1 w-full overflow-hidden relative',
                 styles['content-wrapper'],
                 className,
             )}
         >
-            <div className={clsx('', styles['bg-article'])}>
+            <h1 className="font-bold text-center text-[24px]">Giới thiệu sản phẩm</h1>
+            <div className="w-full">{parse(content)}</div>
+            <div className={styles['bg-article']}>
                 <button
                     className="absolute -translate-x-1/2 left-1/2 b border-[1px] border-blue text-blue py-[8px] w-[280px] rounded-md bottom-0"
                     onClick={toggle}
@@ -197,8 +195,6 @@ const Introduction: React.FC<IIntroductionProps> = ({ toggle, content, className
                     Xem thêm
                 </button>
             </div>
-            <h1 className="font-bold text-center text-[24px]">Giới thiệu sản phẩm</h1>
-            <div className="w-full">{parse(content)}</div>
         </div>
     );
 };

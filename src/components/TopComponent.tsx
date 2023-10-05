@@ -20,7 +20,11 @@ const MobileSideBar = dynamic(() => import('./SideBar/MobileSideBar'), {
     ssr: false,
 });
 
-const TopComponent = () => {
+interface TopComponentProps {
+    hotline?: string;
+}
+
+const TopComponent: React.FC<TopComponentProps> = (props) => {
     const { breakPoint } = useDeviceDetect();
 
     const [isShowDesktopSideBar, toggleShowDesktopSideBar] = useToggle(false);
@@ -70,7 +74,7 @@ const TopComponent = () => {
 
     return (
         <>
-            <ContactHeader className="cursor-pointer" onClick={handleShowSidebar} />
+            <ContactHeader className="cursor-pointer" onClick={handleShowSidebar} hotline={props.hotline} />
             <div className="justify-between lg:flex">
                 <DesktopSideBar
                     className={clsx('basis-[23%] mr-4 absolute lg:relative', {
@@ -90,10 +94,11 @@ const TopComponent = () => {
 interface IContactHeaderProps {
     className?: string;
     onClick: () => void;
+    hotline?: string;
 }
 
 const ContactHeader: React.FC<IContactHeaderProps> = (props) => {
-    const { className, onClick } = props;
+    const { className, onClick, hotline = '1900 9999' } = props;
     return (
         <div className={clsx('text-black flex justify-between my-4', className)}>
             <div className="flex" onClick={onClick}>
@@ -101,7 +106,7 @@ const ContactHeader: React.FC<IContactHeaderProps> = (props) => {
                 <span>Danh mục sản phẩm</span>
             </div>
             <span>
-                Hotline: <span className="font-bold">1900 9999</span>
+                Hotline: <span className="font-bold">{hotline}</span>
             </span>
         </div>
     );
